@@ -5,11 +5,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Geocoder
-import android.location.Location
 import android.location.LocationManager
 import android.net.ConnectivityManager
-import android.net.Network
-import android.net.NetworkInfo
 import android.os.Build
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
@@ -19,7 +16,6 @@ import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.*
@@ -43,7 +39,6 @@ import ru.mephi.weatherapp.recyclerViewAdapters.HourRVAdapter
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.function.Consumer
 
 class WeatherFragment : Fragment() {
 
@@ -80,7 +75,7 @@ class WeatherFragment : Fragment() {
             if (it.containsValue(false)) {
                 Toast.makeText(
                     requireContext(),
-                    getString(R.string.permision_denied),
+                    getString(R.string.permission_denied),
                     Toast.LENGTH_SHORT
                 ).show()
                 checkPermissions()

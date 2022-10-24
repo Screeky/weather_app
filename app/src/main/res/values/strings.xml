@@ -50,10 +50,11 @@
 	<string name="moderate_or_heavy_rain_with_thunder" translatable="false">Moderate or heavy rain with thunder</string>
 	<string name="patchy_light_snow_with_thunder" translatable="false">Patchy light snow with thunder</string>
 	<string name="moderate_or_heavy_snow_with_thunder" translatable="false">Moderate or heavy snow with thunder</string>
-	<string name="permision_denied">Permision denied!</string>
+	<string name="permission_denied">Permission denied!</string>
 	<string name="today">Today</string>
 	<string name="network_status">Check network status and try again later</string>
 	<string name="error">Something went wrong</string>
 	<string name="sunrise">Sunrise</string>
 	<string name="sunset">Sunset</string>
+	<string name="no_internet_connection">No internet connection, please drag to update</string>
 </resources>

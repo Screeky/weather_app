@@ -24,7 +24,7 @@
 				android:layout_height="wrap_content"
 				android:background="@color/red"
 				android:gravity="center"
-				android:text="No internet connection, please drag and update page"
+				android:text="@string/no_internet_connection"
 				android:textColor="@color/white"
 				android:visibility="gone"
 				app:layout_constraintEnd_toEndOf="parent"
