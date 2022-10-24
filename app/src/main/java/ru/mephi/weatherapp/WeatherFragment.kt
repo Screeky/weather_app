@@ -131,9 +131,7 @@ class WeatherFragment : Fragment() {
         if (!checkNetworkState() && weatherViewModel.city == "") {
             dynamicMargin(parentCL)
             connectionTV.visibility = View.VISIBLE
-        }
-
-        else {
+        } else {
             dynamicMargin(constraintLayout)
             if (weatherViewModel.city != "") {
                 updateUI(weatherViewModel)
@@ -154,10 +152,13 @@ class WeatherFragment : Fragment() {
                 } else {
                     checkPermissions()
                 }
-            }
-            else {
+            } else {
                 swipeRefreshLayout.isRefreshing = false
-                Toast.makeText(requireContext(), getString(R.string.network_status), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.network_status),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -189,7 +190,11 @@ class WeatherFragment : Fragment() {
                 (keyCode == KeyEvent.KEYCODE_ENTER)
             ) {
                 if (!checkNetworkState())
-                    Toast.makeText(requireContext(), getString(R.string.network_status), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.network_status),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 else {
                     if (weatherViewModel.newCity != "") {
                         getWeatherData(weatherViewModel.newCity)
@@ -203,7 +208,11 @@ class WeatherFragment : Fragment() {
 
         search.setOnClickListener {
             if (!checkNetworkState())
-                Toast.makeText(requireContext(), getString(R.string.network_status), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.network_status),
+                    Toast.LENGTH_SHORT
+                ).show()
             else {
                 if (weatherViewModel.newCity != "") {
                     getWeatherData(weatherViewModel.newCity)
@@ -299,7 +308,8 @@ class WeatherFragment : Fragment() {
             { error ->
                 swipeRefreshLayout.isRefreshing = false
                 progressBar.visibility = View.GONE
-                Toast.makeText(requireContext(), getString(R.string.error), Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.error), Toast.LENGTH_SHORT)
+                    .show()
                 if (weatherViewModel.city != "")
                     updateUI(weatherViewModel)
             }
@@ -317,9 +327,8 @@ class WeatherFragment : Fragment() {
             .into(currentWeatherPicture)
         maxMinTemperature.text =
             weatherViewModel.dayForecast[0].maxTemperature + " / " + weatherViewModel.dayForecast[0].minTemperature
-
-        //sunriseTV.text = weatherViewModel.dayForecast[0].sunrise
-        //sunsetTV.text = weatherViewModel.dayForecast[0].sunset
+        sunriseTV.text = weatherViewModel.dayForecast[0].sunrise
+        sunsetTV.text = weatherViewModel.dayForecast[0].sunset
 
         hourRVAdapter = HourRVAdapter(requireContext(), weatherViewModel.hourForecast)
         hourRecyclerView.adapter = hourRVAdapter
@@ -451,7 +460,7 @@ class WeatherFragment : Fragment() {
         return (SimpleDateFormat("HH:mm", Locale.getDefault()).format(input.parse(date)!!))
     }
 
-    private fun checkNetworkState(): Boolean{
+    private fun checkNetworkState(): Boolean {
         //true -> internet connection
         //false -> no connection
         val connectivityManager =
@@ -474,7 +483,7 @@ class WeatherFragment : Fragment() {
     }
 
     @SuppressLint("MissingPermission")
-    private fun networkLocation (locationManager: LocationManager){
+    private fun networkLocation(locationManager: LocationManager) {
         val location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
         if (location != null) {
             Log.d("location", location.toString())
@@ -490,7 +499,7 @@ class WeatherFragment : Fragment() {
                 Log.d("tag", "Geocoder Error")
             }
         } else {
-            if (SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            if (SDK_INT >= Build.VERSION_CODES.R) {
                 locationManager.getCurrentLocation(
                     LocationManager.NETWORK_PROVIDER,
                     null,
@@ -508,7 +517,7 @@ class WeatherFragment : Fragment() {
     }
 
     @SuppressLint("MissingPermission")
-    private fun gpsLocation (locationManager: LocationManager){
+    private fun gpsLocation(locationManager: LocationManager) {
         val locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
         Log.d("location", locationGPS.toString())
         if (locationGPS != null) {
@@ -527,7 +536,6 @@ class WeatherFragment : Fragment() {
             }
         } else {
             if (SDK_INT >= Build.VERSION_CODES.R) {
-                var newLocationGPS: Location
                 locationManager.getCurrentLocation(
                     LocationManager.GPS_PROVIDER,
                     null,
