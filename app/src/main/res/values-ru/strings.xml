@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Прогноз погоды</string>
+	<string name="feels_like">Ощущается как</string>
+	<string name="enter_the_name_of_the_city">Введите название города</string>
+	<string name="today">Сегодня</string>
+	<string name="permision_denied">Разрешение отклонено!</string>
+	<string name="network_status">Проверьте состояние сети и повторите попытку позже</string>
+	<string name="error">Что-то пошло не так</string>
+	<string name="sunrise">Восход</string>
+	<string name="sunset">Закат</string>
+</resources>

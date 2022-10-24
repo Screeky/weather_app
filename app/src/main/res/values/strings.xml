@@ -1,0 +1,59 @@
+<resources>
+	<string name="app_name">WeatherApp</string>
+	<string name="feels_like">Feels like</string>
+	<string name="enter_the_name_of_the_city">Enter the name of the city</string>
+	<string name="clear" translatable="false">Clear</string>
+	<string name="partly_cloudy" translatable="false">Partly cloudy</string>
+	<string name="cloudy" translatable="false">Cloudy</string>
+	<string name="overcast" translatable="false">Overcast</string>
+	<string name="mist" translatable="false">Mist</string>
+	<string name="patchy_rain_possible" translatable="false">Patchy rain possible</string>
+	<string name="patchy_snow_possible" translatable="false">Patchy snow possible</string>
+	<string name="patchy_sleet_possible" translatable="false">Patchy sleet possible</string>
+	<string name="patchy_freezing_drizzle_possible" translatable="false">Patchy freezing drizzle possible</string>
+	<string name="thundery_outbreaks_possible" translatable="false">Thundery outbreaks possible</string>
+	<string name="blowing_snow" translatable="false">Blowing snow</string>
+	<string name="blizzard" translatable="false">Blizzard</string>
+	<string name="fog" translatable="false">Fog</string>
+	<string name="freezing_fog" translatable="false">Freezing fog</string>
+	<string name="patchy_light_drizzle" translatable="false">Patchy light drizzle</string>
+	<string name="light_drizzle" translatable="false">Light drizzle</string>
+	<string name="freezing_drizzle" translatable="false">Freezing drizzle</string>
+	<string name="heavy_freezing_drizzle" translatable="false">Heavy freezing drizzle</string>
+	<string name="patchy_light_rain" translatable="false">Patchy light rain</string>
+	<string name="light_rain" translatable="false">Light rain</string>
+	<string name="moderate_rain_at_times" translatable="false">Moderate rain at times</string>
+	<string name="moderate_rain" translatable="false">Moderate rain</string>
+	<string name="heavy_rain_at_times" translatable="false">Heavy rain at times</string>
+	<string name="heavy_rain" translatable="false">Heavy rain</string>
+	<string name="light_freezing_rain" translatable="false">Light freezing rain</string>
+	<string name="moderate_or_heavy_freezing_rain" translatable="false">Moderate or heavy freezing rain</string>
+	<string name="light_sleet" translatable="false">Light sleet</string>
+	<string name="moderate_or_heavy_sleet" translatable="false">Moderate or heavy sleet</string>
+	<string name="patchy_light_snow" translatable="false">Patchy light snow</string>
+	<string name="light_snow" translatable="false">Light snow</string>
+	<string name="patchy_moderate_snow" translatable="false">Patchy moderate snow</string>
+	<string name="moderate_snow" translatable="false">Moderate snow</string>
+	<string name="patchy_heavy_snow" translatable="false">Patchy heavy snow</string>
+	<string name="heavy_snow" translatable="false">Heavy snow</string>
+	<string name="ice_pellets" translatable="false">Ice pellets</string>
+	<string name="light_rain_shower" translatable="false">Light rain shower</string>
+	<string name="moderate_or_heavy_rain_shower" translatable="false">Moderate or heavy rain shower</string>
+	<string name="torrential_rain_shower" translatable="false">Torrential rain shower</string>
+	<string name="light_sleet_showers" translatable="false">Light sleet showers</string>
+	<string name="moderate_or_heavy_sleet_showers" translatable="false">Moderate or heavy sleet showers</string>
+	<string name="light_snow_showers" translatable="false">Light snow showers</string>
+	<string name="moderate_or_heavy_snow_showers" translatable="false">Moderate or heavy snow showers</string>
+	<string name="light_showers_of_ice_pellets" translatable="false">Light showers of ice pellets</string>
+	<string name="moderate_or_heavy_showers_of_ice_pellets" translatable="false">Moderate or heavy showers of ice pellets</string>
+	<string name="patchy_light_rain_with_thunder" translatable="false">Patchy light rain with thunder</string>
+	<string name="moderate_or_heavy_rain_with_thunder" translatable="false">Moderate or heavy rain with thunder</string>
+	<string name="patchy_light_snow_with_thunder" translatable="false">Patchy light snow with thunder</string>
+	<string name="moderate_or_heavy_snow_with_thunder" translatable="false">Moderate or heavy snow with thunder</string>
+	<string name="permision_denied">Permision denied!</string>
+	<string name="today">Today</string>
+	<string name="network_status">Check network status and try again later</string>
+	<string name="error">Something went wrong</string>
+	<string name="sunrise">Sunrise</string>
+	<string name="sunset">Sunset</string>
+</resources>
