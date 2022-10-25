@@ -102,7 +102,6 @@ class WeatherFragment : Fragment() {
         progressBar = view.findViewById(R.id.progress_bar)
         constraintLayout = view.findViewById(R.id.constraint_layout)
         parentCL = view.findViewById(R.id.parent_c_l)
-        constraintLayout.visibility = View.INVISIBLE
         temperature = view.findViewById(R.id.temperature)
         currentWeatherPicture = view.findViewById(R.id.current_weather_pic)
         city = view.findViewById(R.id.city)
@@ -118,6 +117,7 @@ class WeatherFragment : Fragment() {
         windSpeedTV = view.findViewById(R.id.wind_speed)
         humidityTV = view.findViewById(R.id.humidity)
         dynamicMargin(parentCL)
+        constraintLayout.visibility = View.GONE
         return view
     }
 
