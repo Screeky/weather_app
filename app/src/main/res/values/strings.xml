@@ -57,4 +57,13 @@
 	<string name="sunrise">Sunrise</string>
 	<string name="sunset">Sunset</string>
 	<string name="no_internet_connection">No internet connection, please drag to update</string>
+	<string name="uv_index">UV index</string>
+	<string name="humidity">Humidity</string>
+	<string name="wind">Wind</string>
+	<string name="km_h">km/h</string>
+	<string name="low">Low</string>
+	<string name="medium">Medium</string>
+	<string name="high">High</string>
+	<string name="very_high">Very high</string>
+	<string name="extremely_high">Extremely high</string>
 </resources>

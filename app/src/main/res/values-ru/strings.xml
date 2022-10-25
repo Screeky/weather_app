@@ -10,4 +10,13 @@
 	<string name="sunrise">Восход</string>
 	<string name="sunset">Закат</string>
 	<string name="no_internet_connection">Отсутствует интернет-соединение, потяните для обновления </string>
+	<string name="uv_index">УФ-индекс</string>
+	<string name="humidity">Влажность</string>
+	<string name="wind">Ветер</string>
+	<string name="km_h">км/ч</string>
+	<string name="low">Низкий</string>
+	<string name="medium">Средний</string>
+	<string name="high">Высокий</string>
+	<string name="very_high">Очень высокий</string>
+	<string name="extremely_high">Чрезвычайно высокий</string>
 </resources>

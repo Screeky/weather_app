@@ -26,7 +26,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-import com.bumptech.glide.Glide
 import com.squareup.picasso.Picasso
 import org.json.JSONArray
 import org.json.JSONObject
@@ -55,19 +54,22 @@ class WeatherFragment : Fragment() {
     private lateinit var connectionTV: TextView
     private lateinit var sunriseTV: TextView
     private lateinit var sunsetTV: TextView
+    private lateinit var uvIndexTV: TextView
+    private lateinit var windSpeedTV: TextView
+    private lateinit var humidityTV: TextView
+
     private lateinit var inputCity: EditText
 
 
     private lateinit var search: ImageView
     private lateinit var currentWeatherPicture: ImageView
-    private lateinit var sunriseIV: ImageView
-    private lateinit var sunsetIV: ImageView
 
 
     private lateinit var hourRecyclerView: RecyclerView
     private lateinit var dayRecyclerView: RecyclerView
     private lateinit var hourRVAdapter: HourRVAdapter
     private lateinit var dayRVAdapter: DayRVAdapter
+
     private var cityName = ""
 
     private val requestPermissionLauncher =
@@ -110,24 +112,21 @@ class WeatherFragment : Fragment() {
         feelsTemperature = view.findViewById(R.id.feels_temperature)
         hourRecyclerView = view.findViewById(R.id.hourly_forecast)
         dayRecyclerView = view.findViewById(R.id.daily_forecast)
-        sunriseIV = view.findViewById(R.id.sunrise_iv)
-        sunsetIV = view.findViewById(R.id.sunset_iv)
         sunriseTV = view.findViewById(R.id.sunrise_time)
         sunsetTV = view.findViewById(R.id.sunset_time)
+        uvIndexTV = view.findViewById(R.id.uv_index)
+        windSpeedTV = view.findViewById(R.id.wind_speed)
+        humidityTV = view.findViewById(R.id.humidity)
+        dynamicMargin(parentCL)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Glide.with(this).load(R.drawable.sunrise).into(sunriseIV)
-        Glide.with(this).load(R.drawable.sunset).into(sunsetIV)
-
-        if (!checkNetworkState() && weatherViewModel.city == "") {
-            dynamicMargin(parentCL)
+        if (!checkNetworkState() && weatherViewModel.city == "")
             connectionTV.visibility = View.VISIBLE
-        } else {
-            dynamicMargin(constraintLayout)
+         else {
             if (weatherViewModel.city != "") {
                 updateUI(weatherViewModel)
             } else {
@@ -324,6 +323,9 @@ class WeatherFragment : Fragment() {
             weatherViewModel.dayForecast[0].maxTemperature + " / " + weatherViewModel.dayForecast[0].minTemperature
         sunriseTV.text = weatherViewModel.dayForecast[0].sunrise
         sunsetTV.text = weatherViewModel.dayForecast[0].sunset
+        uvIndexTV.text = weatherViewModel.nowForecast.indexUV
+        windSpeedTV.text = weatherViewModel.nowForecast.windSpeed
+        humidityTV.text = weatherViewModel.nowForecast.humidity
 
         hourRVAdapter = HourRVAdapter(requireContext(), weatherViewModel.hourForecast)
         hourRecyclerView.adapter = hourRVAdapter
@@ -349,12 +351,25 @@ class WeatherFragment : Fragment() {
                 response.getJSONObject("current").getJSONObject("condition").getString("icon")
         val feelsTemperature =
             response.getJSONObject("current").getDouble("feelslike_c").toInt().toString() + "°"
+        val indexUV = when (response.getJSONObject("current").getDouble("uv").toInt()) {
+            in 0..2 -> getString(R.string.low)
+            in 3..5 -> getString(R.string.medium)
+            in 6..7 -> getString(R.string.high)
+            in 8..10 -> getString(R.string.very_high)
+            else -> getString(R.string.extremely_high)
+        }
+        val windSpeed = response.getJSONObject("current").getDouble("wind_kph").toInt()
+            .toString() + " " + getString(R.string.km_h)
+        val humidity = response.getJSONObject("current").getInt("humidity").toString() + "%"
         return NowForecast(
             temperature,
             isDay,
             conditionCode,
             currentWeatherPic,
-            feelsTemperature
+            feelsTemperature,
+            indexUV,
+            windSpeed,
+            humidity
         )
     }
 
@@ -486,7 +501,7 @@ class WeatherFragment : Fragment() {
             try {
                 val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 5)
                 addresses.forEach {
-                    if (it.locality != "") {
+                    if (it.locality != null && it.locality != "") {
                         cityName = it.locality
                     }
                 }
@@ -522,7 +537,7 @@ class WeatherFragment : Fragment() {
                 val addresses =
                     geocoder.getFromLocation(locationGPS.latitude, locationGPS.longitude, 5)
                 addresses.forEach {
-                    if (it.locality != "") {
+                    if (it.locality != null && it.locality != "") {
                         cityName = it.locality
                     }
                 }
