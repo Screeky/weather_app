@@ -19,6 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.*
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -44,7 +45,7 @@ class WeatherFragment : Fragment() {
     private lateinit var progressBar: ProgressBar
     private lateinit var constraintLayout: ConstraintLayout
     private lateinit var parentCL: ConstraintLayout
-    private lateinit var scrollView: ScrollView
+    private lateinit var scrollView: NestedScrollView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     private lateinit var temperature: TextView
@@ -118,21 +119,21 @@ class WeatherFragment : Fragment() {
         humidityTV = view.findViewById(R.id.humidity)
         dynamicMargin(parentCL)
         constraintLayout.visibility = View.GONE
+        if (!checkNetworkState())
+            connectionTV.visibility = View.VISIBLE
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (!checkNetworkState() && weatherViewModel.city == "")
-            connectionTV.visibility = View.VISIBLE
-         else {
-            if (weatherViewModel.city != "") {
-                updateUI(weatherViewModel)
-            } else {
-                checkPermissions()
-            }
+        if (weatherViewModel.city != "") {
+            updateUI(weatherViewModel)
+        } else {
+            if (checkNetworkState())
+            checkPermissions()
         }
+
     }
 
     override fun onStart() {
