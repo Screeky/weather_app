@@ -147,6 +147,7 @@ class WeatherFragment : Fragment() {
                     checkPermissions()
                 }
             } else {
+                connectionTV.visibility = View.VISIBLE
                 swipeRefreshLayout.isRefreshing = false
                 Toast.makeText(
                     requireContext(),
@@ -183,13 +184,16 @@ class WeatherFragment : Fragment() {
             if ((keyEvent.action == KeyEvent.ACTION_DOWN) &&
                 (keyCode == KeyEvent.KEYCODE_ENTER)
             ) {
-                if (!checkNetworkState())
+                if (!checkNetworkState()) {
+                    connectionTV.visibility = View.VISIBLE
                     Toast.makeText(
                         requireContext(),
                         getString(R.string.network_status),
                         Toast.LENGTH_SHORT
                     ).show()
+                }
                 else {
+                    connectionTV.visibility = View.GONE
                     if (weatherViewModel.newCity != "") {
                         getWeatherData(weatherViewModel.newCity)
                         weatherViewModel.newCity = ""
@@ -201,13 +205,16 @@ class WeatherFragment : Fragment() {
         }
 
         search.setOnClickListener {
-            if (!checkNetworkState())
+            if (!checkNetworkState()) {
+                connectionTV.visibility = View.VISIBLE
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.network_status),
                     Toast.LENGTH_SHORT
                 ).show()
+            }
             else {
+                connectionTV.visibility = View.GONE
                 if (weatherViewModel.newCity != "") {
                     getWeatherData(weatherViewModel.newCity)
                     weatherViewModel.newCity = ""
