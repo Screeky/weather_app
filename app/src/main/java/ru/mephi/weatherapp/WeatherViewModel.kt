@@ -12,4 +12,5 @@ class WeatherViewModel: ViewModel() {
     var city = ""
     var place = ""
     var newCity = ""
+    var timeZone = ""
 }

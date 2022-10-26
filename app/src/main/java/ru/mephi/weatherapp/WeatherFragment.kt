@@ -37,6 +37,7 @@ import ru.mephi.weatherapp.data.Storage
 import ru.mephi.weatherapp.recyclerViewAdapters.DayRVAdapter
 import ru.mephi.weatherapp.recyclerViewAdapters.HourRVAdapter
 import java.io.IOException
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -61,10 +62,10 @@ class WeatherFragment : Fragment() {
 
     private lateinit var inputCity: EditText
 
+    private lateinit var clock: TextClock
 
     private lateinit var search: ImageView
     private lateinit var currentWeatherPicture: ImageView
-
 
     private lateinit var hourRecyclerView: RecyclerView
     private lateinit var dayRecyclerView: RecyclerView
@@ -75,7 +76,7 @@ class WeatherFragment : Fragment() {
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
-            if (it.containsValue(false)) {
+            if (!it.getValue(Manifest.permission.ACCESS_FINE_LOCATION) && !it.getValue(Manifest.permission.ACCESS_COARSE_LOCATION)) {
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.permission_denied),
@@ -117,6 +118,7 @@ class WeatherFragment : Fragment() {
         uvIndexTV = view.findViewById(R.id.uv_index)
         windSpeedTV = view.findViewById(R.id.wind_speed)
         humidityTV = view.findViewById(R.id.humidity)
+        clock = view.findViewById(R.id.clock)
         dynamicMargin(parentCL)
         constraintLayout.visibility = View.GONE
         if (!checkNetworkState())
@@ -131,7 +133,7 @@ class WeatherFragment : Fragment() {
             updateUI(weatherViewModel)
         } else {
             if (checkNetworkState())
-            checkPermissions()
+                checkPermissions()
         }
 
     }
@@ -192,8 +194,7 @@ class WeatherFragment : Fragment() {
                         getString(R.string.network_status),
                         Toast.LENGTH_SHORT
                     ).show()
-                }
-                else {
+                } else {
                     connectionTV.visibility = View.GONE
                     if (weatherViewModel.newCity != "") {
                         getWeatherData(weatherViewModel.newCity)
@@ -213,8 +214,7 @@ class WeatherFragment : Fragment() {
                     getString(R.string.network_status),
                     Toast.LENGTH_SHORT
                 ).show()
-            }
-            else {
+            } else {
                 connectionTV.visibility = View.GONE
                 if (weatherViewModel.newCity != "") {
                     getWeatherData(weatherViewModel.newCity)
@@ -246,7 +246,7 @@ class WeatherFragment : Fragment() {
             requireContext(), permissions[3]
         ) == PackageManager.PERMISSION_GRANTED
 
-        if (!p1 || !p2 || !p3 || !p4) {
+        if (!p1 || (!p2 && !p3) || !p4) {
             requestPermissionLauncher.launch(permissions)
         } else {
             defineCity()
@@ -287,13 +287,16 @@ class WeatherFragment : Fragment() {
                     response.getJSONObject("forecast").getJSONArray("forecastday")
                 val country = response.getJSONObject("location").getString("country")
                 val city = response.getJSONObject("location").getString("name")
+                val timeZoneId = response.getJSONObject("location").getString("tz_id")
                 val place = "$city, $country"
+                val localTime = response.getJSONObject("location").getString("localtime")
+                val localTimeHour = changeDateFormat(localTime).toInt()
 
                 //Now forecast
                 val nowForecast = getNowForecast(response)
 
                 //Hour forecast
-                val hourForecast = getHourForecast(forecastDayArray)
+                val hourForecast = getHourForecast(forecastDayArray, localTimeHour)
 
                 //Day forecast
                 val dayForecast = getDayForecast(forecastDayArray)
@@ -304,6 +307,7 @@ class WeatherFragment : Fragment() {
                     this.dayForecast = dayForecast
                     this.city = city
                     this.place = place
+                    this.timeZone = timeZoneId
                 }
                 updateUI(weatherViewModel)
             },
@@ -334,6 +338,7 @@ class WeatherFragment : Fragment() {
         uvIndexTV.text = weatherViewModel.nowForecast.indexUV
         windSpeedTV.text = weatherViewModel.nowForecast.windSpeed
         humidityTV.text = weatherViewModel.nowForecast.humidity
+        clock.timeZone = weatherViewModel.timeZone
 
         hourRVAdapter = HourRVAdapter(requireContext(), weatherViewModel.hourForecast)
         hourRecyclerView.adapter = hourRVAdapter
@@ -381,9 +386,11 @@ class WeatherFragment : Fragment() {
         )
     }
 
-    private fun getHourForecast(forecastDayArray: JSONArray): MutableList<HourForecast> {
+    private fun getHourForecast(
+        forecastDayArray: JSONArray,
+        localTimeHour: Int
+    ): MutableList<HourForecast> {
         val hourForecastList = mutableListOf<HourForecast>()
-        val localTimeHour = SimpleDateFormat("HH", Locale.getDefault()).format(Date()).toInt()
         if (localTimeHour == 23) {
             val currentDay = forecastDayArray.getJSONObject(1)
             val hours = currentDay.getJSONArray("hour")
@@ -460,9 +467,18 @@ class WeatherFragment : Fragment() {
     }
 
     @SuppressLint("SimpleDateFormat")
+    private fun changeDateFormat(date: String): String {
+        val input = SimpleDateFormat("yyyy-MM-dd HH:mm")
+        return (SimpleDateFormat("HH", Locale.getDefault()).format(input.parse(date)!!))
+    }
+
+    @SuppressLint("SimpleDateFormat")
     private fun changeDateFormat1(date: String): String {
         val input = SimpleDateFormat("yyyy-MM-dd HH:mm")
-        return (SimpleDateFormat("HH:mm", Locale.getDefault()).format(input.parse(date)!!))
+        if (is12HoursFormat())
+            return (SimpleDateFormat("hh:mm a", Locale.getDefault()).format(input.parse(date)!!))
+        else
+            return (SimpleDateFormat("HH:mm", Locale.getDefault()).format(input.parse(date)!!))
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -568,5 +584,10 @@ class WeatherFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun is12HoursFormat(): Boolean {
+        val locale = SimpleDateFormat.getTimeInstance(DateFormat.SHORT).format(Date())
+        return (locale.contains("AM") || locale.contains("PM"))
     }
 }
