@@ -174,16 +174,16 @@
 						tools:text="5°" />
 
 					<TextClock
-						android:layout_marginTop="4dp"
 						android:id="@+id/clock"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
+						android:layout_marginTop="4dp"
 						android:fontFamily="sans-serif-light"
+						android:format12Hour="hh:mm a zz"
+						android:format24Hour="HH:mm zz"
 						android:textColor="@color/white"
 						app:layout_constraintStart_toStartOf="@id/max_min_temperature"
-						app:layout_constraintTop_toBottomOf="@id/feels_like"
-						android:format12Hour="hh:mm a zz"
-						android:format24Hour="HH:mm zz"/>
+						app:layout_constraintTop_toBottomOf="@id/feels_like" />
 
 					<androidx.recyclerview.widget.RecyclerView
 						android:id="@+id/hourly_forecast"

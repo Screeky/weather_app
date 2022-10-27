@@ -4,9 +4,9 @@ data class DayForecast (
     val date: String,
     val dayWeatherPic: String,
     val nightWeatherPic: String,
-    val maxTemperature: String,
-    val minTemperature: String,
-    val chanceOfRain: String,
+    val maxTemperature: Int,
+    val minTemperature: Int,
+    val chanceOfPrecipitation: String,
     val sunrise: String,
     val sunset: String
         )

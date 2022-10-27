@@ -1,5 +1,6 @@
 package ru.mephi.weatherapp.recyclerViewAdapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -29,18 +30,22 @@ class HourRVAdapter(context: Context, private val hours: List<HourForecast>) :
 
     inner class HourViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private lateinit var hourForecast: HourForecast
-
         private val time: TextView = itemView.findViewById(R.id.time)
         private val weatherPic: ImageView = itemView.findViewById(R.id.weather_pic)
         private val temperature: TextView = itemView.findViewById(R.id.temperature)
-        private val chanceOfRain: TextView = itemView.findViewById(R.id.chance_of_rain)
+        private val chanceOfPrecipitation: TextView = itemView.findViewById(R.id.chance_of_precip)
+        private val precipitationPic: ImageView = itemView.findViewById(R.id.precip_pic)
 
+        @SuppressLint("SetTextI18n")
         fun bind(hourForecast: HourForecast) {
             time.text = hourForecast.time
             Picasso.get().load(hourForecast.weatherPic).into(weatherPic)
-            temperature.text = hourForecast.temperature
-            chanceOfRain.text = hourForecast.chanceOfRain
+            temperature.text = hourForecast.temperature.toString() + "°"
+            chanceOfPrecipitation.text = hourForecast.chanceOfPrecipitation
+            if (hourForecast.temperature < 0)
+                precipitationPic.setImageResource(R.drawable.snowflake)
+            else
+                precipitationPic.setImageResource(R.drawable.drop)
 
 
         }

@@ -332,7 +332,8 @@ class WeatherFragment : Fragment() {
         Picasso.get().load(weatherViewModel.nowForecast.currentWeatherPic)
             .into(currentWeatherPicture)
         maxMinTemperature.text =
-            weatherViewModel.dayForecast[0].maxTemperature + " / " + weatherViewModel.dayForecast[0].minTemperature
+            weatherViewModel.dayForecast[0].maxTemperature.toString() +
+                    "° / " + weatherViewModel.dayForecast[0].minTemperature.toString() + "°"
         sunriseTV.text = weatherViewModel.dayForecast[0].sunrise
         sunsetTV.text = weatherViewModel.dayForecast[0].sunset
         uvIndexTV.text = weatherViewModel.nowForecast.indexUV
@@ -396,12 +397,16 @@ class WeatherFragment : Fragment() {
             val hours = currentDay.getJSONArray("hour")
             for (i in 0 until hours.length()) {
                 val hour = hours.getJSONObject(i)
-                val hourForecast = HourForecast(
-                    changeDateFormat1(hour.getString("time")),
-                    "https:" + hour.getJSONObject("condition").getString("icon"),
-                    hour.getDouble("temp_c").toInt().toString() + "°",
-                    hour.getInt("chance_of_rain").toString() + "%"
-                )
+                val time = changeDateFormat1(hour.getString("time"))
+                val weatherPic = "https:" + hour.getJSONObject("condition").getString("icon")
+                val temperature = hour.getDouble("temp_c").toInt()
+                val chanceOfPrecipitation: String
+                if (temperature < 0)
+                    chanceOfPrecipitation = hour.getInt("chance_of_snow").toString() + "%"
+                else
+                    chanceOfPrecipitation = hour.getInt("chance_of_rain").toString() + "%"
+                val hourForecast =
+                    HourForecast(time, weatherPic, temperature, chanceOfPrecipitation)
                 hourForecastList.add(hourForecast)
             }
             return hourForecastList
@@ -410,24 +415,32 @@ class WeatherFragment : Fragment() {
             var hours = currentDay.getJSONArray("hour")
             for (i in localTimeHour + 1 until hours.length()) {
                 val hour = hours.getJSONObject(i)
-                val hourForecast = HourForecast(
-                    changeDateFormat1(hour.getString("time")),
-                    "https:" + hour.getJSONObject("condition").getString("icon"),
-                    hour.getDouble("temp_c").toInt().toString() + "°",
-                    hour.getInt("chance_of_rain").toString() + "%"
-                )
+                val time = changeDateFormat1(hour.getString("time"))
+                val weatherPic = "https:" + hour.getJSONObject("condition").getString("icon")
+                val temperature = hour.getDouble("temp_c").toInt()
+                val chanceOfPrecipitation: String
+                if (temperature < 0)
+                    chanceOfPrecipitation = hour.getInt("chance_of_snow").toString() + "%"
+                else
+                    chanceOfPrecipitation = hour.getInt("chance_of_rain").toString() + "%"
+                val hourForecast =
+                    HourForecast(time, weatherPic, temperature, chanceOfPrecipitation)
                 hourForecastList.add(hourForecast)
             }
             currentDay = forecastDayArray.getJSONObject(1)
             hours = currentDay.getJSONArray("hour")
             for (i in 0..localTimeHour) {
                 val hour = hours.getJSONObject(i)
-                val hourForecast = HourForecast(
-                    changeDateFormat1(hour.getString("time")),
-                    "https:" + hour.getJSONObject("condition").getString("icon"),
-                    hour.getDouble("temp_c").toInt().toString() + "°",
-                    hour.getInt("chance_of_rain").toString() + "%"
-                )
+                val time = changeDateFormat1(hour.getString("time"))
+                val weatherPic = "https:" + hour.getJSONObject("condition").getString("icon")
+                val temperature = hour.getDouble("temp_c").toInt()
+                val chanceOfPrecipitation: String
+                if (temperature < 0)
+                    chanceOfPrecipitation = hour.getInt("chance_of_snow").toString() + "%"
+                else
+                    chanceOfPrecipitation = hour.getInt("chance_of_rain").toString() + "%"
+                val hourForecast =
+                    HourForecast(time, weatherPic, temperature, chanceOfPrecipitation)
                 hourForecastList.add(hourForecast)
             }
             return hourForecastList
@@ -448,16 +461,20 @@ class WeatherFragment : Fragment() {
             val dayWeatherPic = Storage.getInfo(requireContext(), 1).getValue(code).picture
             val nightWeatherPic =
                 Storage.getInfo(requireContext(), 0).getValue(code).picture
-            val maxTemperature = day.getDouble("maxtemp_c").toInt().toString() + "°"
-            val minTemperature = day.getDouble("mintemp_c").toInt().toString() + "°"
-            val chanceOfRain = day.getInt("daily_chance_of_rain").toString() + "%"
+            val maxTemperature = day.getDouble("maxtemp_c").toInt()
+            val minTemperature = day.getDouble("mintemp_c").toInt()
+            val chanceOfPrecipitation: String
+            if (minTemperature < 0)
+                chanceOfPrecipitation = day.getInt("daily_chance_of_snow").toString() + "%"
+            else
+                chanceOfPrecipitation = day.getInt("daily_chance_of_rain").toString() + "%"
             val dayForecast = DayForecast(
                 date,
                 dayWeatherPic,
                 nightWeatherPic,
                 maxTemperature,
                 minTemperature,
-                chanceOfRain,
+                chanceOfPrecipitation,
                 changeDateFormat3(sunrise),
                 changeDateFormat3(sunset)
             )

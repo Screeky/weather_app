@@ -3,6 +3,6 @@ package ru.mephi.weatherapp.data
 data class HourForecast(
     val time: String,
     val weatherPic: String,
-    val temperature: String,
-    val chanceOfRain: String
+    val temperature: Int,
+    val chanceOfPrecipitation: String
 )
