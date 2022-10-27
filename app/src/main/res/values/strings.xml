@@ -66,4 +66,5 @@
 	<string name="high">High</string>
 	<string name="very_high">Very high</string>
 	<string name="extremely_high">Extremely high</string>
+	<string name="failed_locate_city">Failed to locate the city</string>
 </resources>

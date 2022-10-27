@@ -19,4 +19,5 @@
 	<string name="high">Высокий</string>
 	<string name="very_high">Очень высокий</string>
 	<string name="extremely_high">Чрезвычайно высокий</string>
+	<string name="failed_locate_city">Не удалось определить город</string>
 </resources>

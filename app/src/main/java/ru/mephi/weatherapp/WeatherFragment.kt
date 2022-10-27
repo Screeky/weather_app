@@ -266,8 +266,15 @@ class WeatherFragment : Fragment() {
         if (cityName == "") {
             gpsLocation(locationManager)
         }
-        Toast.makeText(context, cityName, Toast.LENGTH_SHORT).show()
-        getWeatherData(cityName)
+        if (cityName != "") {
+            Toast.makeText(context, cityName, Toast.LENGTH_SHORT).show()
+            getWeatherData(cityName)
+        }
+        else {
+            swipeRefreshLayout.isRefreshing = false
+            Toast.makeText(context, getString(R.string.failed_locate_city), Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
 
