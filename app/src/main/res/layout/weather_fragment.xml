@@ -63,7 +63,6 @@
 						android:id="@+id/temperature"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:layout_marginTop="-10dp"
 						android:fontFamily="sans-serif-light"
 						android:textColor="@color/white"
 						android:textSize="72sp"
@@ -83,32 +82,20 @@
 						tools:ignore="ContentDescription"
 						tools:src="@tools:sample/avatars" />
 
-					<ImageView
-						android:id="@+id/place"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:baselineAlignBottom="true"
-						android:src="@drawable/ic_place"
-						app:layout_constraintStart_toStartOf="@id/temperature"
-						app:layout_constraintTop_toBottomOf="@id/current_weather_pic"
-						tools:ignore="ContentDescription" />
-
 					<TextView
 						android:id="@+id/city"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:layout_marginStart="4dp"
-						android:layout_marginTop="10dp"
 						android:ellipsize="end"
 						android:fontFamily="sans-serif-light"
-						android:maxWidth="300dp"
 						android:maxLines="1"
 						android:textColor="@color/white"
 						android:textSize="32sp"
-						app:layout_constraintBaseline_toBaselineOf="@id/place"
-						app:layout_constraintStart_toEndOf="@id/place"
+						app:drawableLeftCompat="@drawable/ic_place"
+						app:layout_constraintStart_toStartOf="@id/temperature"
 						app:layout_constraintTop_toBottomOf="@id/current_weather_pic"
-						tools:text="@tools:sample/cities" />
+						tools:text="@tools:sample/cities"/>
+
 
 					<ImageView
 						android:id="@+id/search"
@@ -117,8 +104,8 @@
 						android:layout_marginTop="12dp"
 						android:baselineAlignBottom="true"
 						android:src="@drawable/ic_search"
-						app:layout_constraintStart_toStartOf="@id/place"
-						app:layout_constraintTop_toBottomOf="@id/place"
+						app:layout_constraintStart_toStartOf="@id/city"
+						app:layout_constraintTop_toBottomOf="@id/city"
 						tools:ignore="ContentDescription" />
 
 					<EditText
@@ -250,6 +237,7 @@
 								android:fontFamily="sans-serif-light"
 								android:gravity="center"
 								android:text="@string/uv_index"
+								android:textColor="@color/white"
 								android:textSize="18sp"
 								android:textStyle="bold"
 								app:layout_constraintStart_toStartOf="parent"
@@ -262,6 +250,7 @@
 								android:layout_marginTop="10dp"
 								android:fontFamily="sans-serif-light"
 								android:gravity="center"
+								android:textColor="@color/white"
 								android:textSize="18sp"
 								app:layout_constraintStart_toStartOf="parent"
 								app:layout_constraintTop_toTopOf="parent"
@@ -295,6 +284,7 @@
 								android:fontFamily="sans-serif-light"
 								android:gravity="center"
 								android:text="@string/wind"
+								android:textColor="@color/white"
 								android:textSize="18sp"
 								android:textStyle="bold"
 								app:layout_constraintStart_toStartOf="parent"
@@ -308,6 +298,7 @@
 								android:fontFamily="sans-serif-light"
 								android:gravity="center"
 								android:text="@string/km_h"
+								android:textColor="@color/white"
 								android:textSize="18sp"
 								app:layout_constraintStart_toStartOf="parent"
 								app:layout_constraintTop_toTopOf="parent" />
@@ -340,6 +331,7 @@
 								android:fontFamily="sans-serif-light"
 								android:gravity="center"
 								android:text="@string/humidity"
+								android:textColor="@color/white"
 								android:textSize="18sp"
 								android:textStyle="bold"
 								app:layout_constraintStart_toStartOf="parent"
@@ -352,6 +344,7 @@
 								android:layout_marginTop="10dp"
 								android:fontFamily="sans-serif-light"
 								android:gravity="center"
+								android:textColor="@color/white"
 								android:textSize="18sp"
 								app:layout_constraintStart_toStartOf="parent"
 								app:layout_constraintTop_toTopOf="parent"
@@ -387,6 +380,7 @@
 								android:fontFamily="sans-serif-light"
 								android:gravity="center"
 								android:text="@string/sunrise"
+								android:textColor="@color/white"
 								android:textSize="18sp"
 								app:layout_constraintStart_toStartOf="parent"
 								app:layout_constraintTop_toTopOf="parent" />
@@ -398,6 +392,7 @@
 								android:layout_marginTop="4dp"
 								android:fontFamily="sans-serif-light"
 								android:gravity="center"
+								android:textColor="@color/white"
 								android:textSize="18sp"
 								android:textStyle="bold"
 								app:layout_constraintStart_toStartOf="parent"
@@ -429,6 +424,7 @@
 								android:fontFamily="sans-serif-light"
 								android:gravity="center"
 								android:text="@string/sunset"
+								android:textColor="@color/white"
 								android:textSize="18sp"
 								app:layout_constraintStart_toStartOf="parent"
 								app:layout_constraintTop_toTopOf="parent" />
@@ -440,6 +436,7 @@
 								android:layout_marginTop="4dp"
 								android:fontFamily="sans-serif-light"
 								android:gravity="center"
+								android:textColor="@color/white"
 								android:textSize="18sp"
 								android:textStyle="bold"
 								app:layout_constraintStart_toStartOf="parent"

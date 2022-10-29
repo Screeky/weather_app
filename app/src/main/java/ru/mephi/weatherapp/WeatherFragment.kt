@@ -2,6 +2,7 @@ package ru.mephi.weatherapp
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Geocoder
@@ -14,6 +15,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -145,7 +147,10 @@ class WeatherFragment : Fragment() {
             if (checkNetworkState()) {
                 connectionTV.visibility = View.GONE
                 if (weatherViewModel.city != "") {
-                    getWeatherData(weatherViewModel.city)
+                    if (weatherViewModel.city == "Санкт-Петербург")
+                        getWeatherData("Ленинград")
+                    else
+                        getWeatherData(weatherViewModel.city)
                 } else {
                     checkPermissions()
                 }
@@ -187,6 +192,8 @@ class WeatherFragment : Fragment() {
             if ((keyEvent.action == KeyEvent.ACTION_DOWN) &&
                 (keyCode == KeyEvent.KEYCODE_ENTER)
             ) {
+                val imm = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view?.windowToken, 0)
                 if (!checkNetworkState()) {
                     connectionTV.visibility = View.VISIBLE
                     Toast.makeText(
@@ -197,6 +204,11 @@ class WeatherFragment : Fragment() {
                 } else {
                     connectionTV.visibility = View.GONE
                     if (weatherViewModel.newCity != "") {
+                        if (weatherViewModel.newCity.contains("санк", true) ||
+                            weatherViewModel.newCity
+                                .contains(Regex("п[а-я]тер", RegexOption.IGNORE_CASE)))
+                            getWeatherData("Ленинград")
+                        else
                         getWeatherData(weatherViewModel.newCity)
                         weatherViewModel.newCity = ""
                     }
@@ -207,6 +219,8 @@ class WeatherFragment : Fragment() {
         }
 
         search.setOnClickListener {
+            val imm = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view?.windowToken, 0)
             if (!checkNetworkState()) {
                 connectionTV.visibility = View.VISIBLE
                 Toast.makeText(
@@ -217,6 +231,11 @@ class WeatherFragment : Fragment() {
             } else {
                 connectionTV.visibility = View.GONE
                 if (weatherViewModel.newCity != "") {
+                    if (weatherViewModel.newCity.contains("санк", true) ||
+                        weatherViewModel.newCity
+                            .contains(Regex("п[а-я]тер", RegexOption.IGNORE_CASE)))
+                        getWeatherData("Ленинград")
+                    else
                     getWeatherData(weatherViewModel.newCity)
                     weatherViewModel.newCity = ""
                 }
@@ -267,16 +286,22 @@ class WeatherFragment : Fragment() {
             gpsLocation(locationManager)
         }
         if (cityName != "") {
-            Toast.makeText(context, cityName, Toast.LENGTH_SHORT).show()
-            getWeatherData(cityName)
-        }
-        else {
+            if (cityName.contains("санк", true) ||
+                cityName.contains(Regex("п[а-я]тер", RegexOption.IGNORE_CASE))
+            ) {
+                cityName = "Санкт-Петербург"
+                Toast.makeText(context, cityName, Toast.LENGTH_SHORT).show()
+                getWeatherData("Ленинград")
+            } else {
+                Toast.makeText(context, cityName, Toast.LENGTH_SHORT).show()
+                getWeatherData(cityName)
+            }
+        } else {
             swipeRefreshLayout.isRefreshing = false
             Toast.makeText(context, getString(R.string.failed_locate_city), Toast.LENGTH_SHORT)
                 .show()
         }
     }
-
 
     private fun getWeatherData(cityName: String) {
         constraintLayout.visibility = View.INVISIBLE
@@ -293,7 +318,9 @@ class WeatherFragment : Fragment() {
                 val forecastDayArray =
                     response.getJSONObject("forecast").getJSONArray("forecastday")
                 val country = response.getJSONObject("location").getString("country")
-                val city = response.getJSONObject("location").getString("name")
+                var city = response.getJSONObject("location").getString("name")
+                if (city == "Ленинград")
+                    city = "Санкт-Петербург"
                 val timeZoneId = response.getJSONObject("location").getString("tz_id")
                 val place = "$city, $country"
                 val localTime = response.getJSONObject("location").getString("localtime")

@@ -16,6 +16,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="2dp"
+		android:textColor="@color/white"
 		android:textSize="12sp"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
@@ -40,6 +41,7 @@
 		android:layout_height="wrap_content"
 		android:layout_marginTop="4dp"
 		android:fontFamily="sans-serif-light"
+		android:textColor="@color/white"
 		android:textSize="12sp"
 		android:textStyle="bold"
 		app:layout_constraintEnd_toEndOf="parent"
@@ -70,6 +72,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
+			android:textColor="@color/white"
 			android:textSize="11sp"
 			tools:text="100%" />
 

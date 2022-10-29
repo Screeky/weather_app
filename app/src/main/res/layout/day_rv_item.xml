@@ -22,6 +22,7 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_vertical"
 			android:fontFamily="sans-serif-light"
+			android:textColor="@color/white"
 			android:textSize="16sp"
 			android:textStyle="bold"
 			tools:text="@tools:sample/date/ddmmyy" />
@@ -46,11 +47,12 @@
 		<TextView
 			android:id="@+id/chance_of_precip"
 			android:layout_width="wrap_content"
-			android:minWidth="35sp"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center"
 			android:layout_marginStart="4dp"
 			android:fontFamily="sans-serif"
+			android:minWidth="35sp"
+			android:textColor="@color/white"
 			android:textSize="16sp"
 			tools:text="100%" />
 
@@ -59,9 +61,9 @@
 			android:layout_width="32dp"
 			android:layout_height="32dp"
 			android:layout_gravity="center_vertical"
+			android:layout_marginStart="4dp"
 			tools:ignore="ContentDescription"
-			tools:src="@tools:sample/avatars"
-			android:layout_marginStart="4dp"/>
+			tools:src="@tools:sample/avatars" />
 
 		<ImageView
 			android:id="@+id/night_weather_pic"
@@ -88,6 +90,7 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="center"
 			android:fontFamily="sans-serif-light"
+			android:textColor="@color/white"
 			android:textSize="18sp"
 			android:textStyle="bold"
 			tools:text="10°C" />
@@ -99,6 +102,7 @@
 			android:layout_gravity="center"
 			android:layout_marginStart="12dp"
 			android:fontFamily="sans-serif-light"
+			android:textColor="@color/white"
 			android:textSize="18sp"
 			android:textStyle="bold"
 			tools:text="5°C" />
